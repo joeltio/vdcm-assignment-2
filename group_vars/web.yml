@@ -1,0 +1,6 @@
+---
+# Variables here are for web role
+www_name: data_green
+service:
+  name: data-green
+  description: Data Green HR Application

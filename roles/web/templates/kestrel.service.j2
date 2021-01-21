@@ -1,0 +1,17 @@
+[Unit]
+Description={{ service["description"] }}
+
+[Service]
+WorkingDirectory=/var/www/{{ www_name }}
+ExecStart=/usr/bin/dotnet {{ dll_name }}
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes:
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=dotnet-{{ service["name"] }}
+User=www-data
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target

@@ -1,6 +1,13 @@
 ---
-# Variables here are for web role
+# Variables here are for the web role
+
+# Name of folder in /var/www/
 www_name: data_green
+
+# Configuration for kestrel service that runs the dotnet core application
 service:
   name: data-green
   description: Data Green HR Application
+
+# Nginx port number
+port: 5000

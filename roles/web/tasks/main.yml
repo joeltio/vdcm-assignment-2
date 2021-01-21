@@ -1,0 +1,4 @@
+---
+- include: install_dotnet_core
+- include: install_app
+- include: install_nginx

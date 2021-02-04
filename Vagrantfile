@@ -8,14 +8,23 @@ Vagrant.configure("2") do |config|
     v.cpus = 1
   end
 
+  groups = {
+    :webservers => [],
+    :loadbalancers => [],
+    :dbserver => []
+  }
+
   # Create the web VMs
   N = 3
   (1..N).each do |machine_id|
-    config.vm.define "web#{machine_id}" do |machine|
-      machine.vm.hostname = "web#{machine_id}"
+    name = "web#{machine_id}"
+    config.vm.define name do |machine|
+      machine.vm.hostname = name
       machine.vm.network "private_network", ip: "192.168.77.#{10+machine_id}"
       machine.vm.box = "bento/ubuntu-20.10"
     end
+
+    groups[:webservers].append(name)
   end
 
   # Create the load balancer VMs
@@ -24,6 +33,7 @@ Vagrant.configure("2") do |config|
     machine.vm.network "private_network", ip: "192.168.77.20"
     machine.vm.box = "bento/ubuntu-20.10"
   end
+  groups[:loadbalancers].append("lb1")
 
   # Create the DB VM
   config.vm.define "db1" do |machine|
@@ -31,6 +41,7 @@ Vagrant.configure("2") do |config|
     machine.vm.network "private_network", ip: "192.168.77.30"
     machine.vm.box = "bento/ubuntu-20.10"
   end
+  groups[:dbserver].append("db1")
 
   # Create the master controller VM
   config.vm.define "control" do |machine|
@@ -40,8 +51,10 @@ Vagrant.configure("2") do |config|
     
     # Run ansible on control
     machine.vm.provision :ansible do |ansible|
-    # Disable default limit to connect to all the machines
-    ansible.limit = "all"
-    ansible.playbook = "main.yml"
+      # Disable default limit to connect to all the machines
+      ansible.limit = "all"
+      ansible.playbook = "main.yml"
+      ansible.groups = groups
+    end
   end
 end

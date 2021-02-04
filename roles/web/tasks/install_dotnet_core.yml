@@ -1,14 +1,10 @@
 ---
 # These tasks install dotnet core
 
-- name: Download dotnet core package
-  get_url:
-    url: {{ dotnet_core_url }}
-    dest: /tmp/dotnet-prod.deb
-  when: packages-microsoft-prod.rc = 1
+- name: Download and extract dotnet core package
+  become: yes
+  unarchive:
+    src: "{{ dotnet_core_url }}"
+    dest: /usr/local/bin
+    remote_src: yes
 
-- name: Install dotnet core package
-  apt:
-    deb: /tmp/dotnet-prod.deb
-  sudo: true
-  when: packages-microsoft-prod.rc = 1

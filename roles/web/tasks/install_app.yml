@@ -2,25 +2,29 @@
 # These tasks install the dotnet core application
 
 - name: Copy app files to www folder
+  become: yes
   copy:
     src: app_publish
     dest: /var/www/{{ www_name }}
 
 - name: Create kestrel service
+  become: yes
   vars:
     dll_name: DataGreenHRApplication.dll
   template:
     src: kestrel.service.j2
-    dest: /etc/systemd/system/{{ service["name"] }}.service
+    dest: "/etc/systemd/system/{{ service['name'] }}.service"
 
 - name: Enable kestrel service to start on boot
+  become: yes
   service:
     # TODO: Check if this needs the .service suffix
-    name: {{ service["name"] }}
+    name: "{{ service['name'] }}"
     enabled: yes
 
 - name: Start kestrel service
+  become: yes
   service:
     # TODO: Check if this needs the .service suffix
-    name: {{ service["name"] }}
+    name: "{{ service['name'] }}"
     state: started

@@ -1,0 +1,23 @@
+---
+# This playbook deploys a web application, load balancer and a database
+
+- name: configure and deploy the database
+  hosts: dbserver
+  remote_user: root
+
+  roles:
+    - db
+
+- name: configure and deploy the web servers
+  hosts: webservers
+  remote_user: root
+
+  roles:
+    - web
+
+- name: configure and deploy the load balancers
+  hosts: loadbalancers
+  remote_user: root
+
+  roles:
+    - load_balancer

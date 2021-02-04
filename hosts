@@ -1,0 +1,11 @@
+[webservers]
+web1
+web2
+web3
+
+[dbserver]
+db1
+
+[loadbalancers]
+lb1
+

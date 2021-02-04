@@ -2,8 +2,8 @@
 Description={{ service["description"] }}
 
 [Service]
-WorkingDirectory=/var/www/{{ www_name }}
-ExecStart=/usr/bin/dotnet {{ dll_name }}
+WorkingDirectory=/var/www/{{ www_name }}/app_publish
+ExecStart=/usr/local/bin/dotnet {{ dll_name }}
 Restart=always
 # Restart service after 10 seconds if the dotnet service crashes:
 RestartSec=10

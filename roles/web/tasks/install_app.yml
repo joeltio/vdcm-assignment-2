@@ -18,13 +18,11 @@
 - name: Enable kestrel service to start on boot
   become: yes
   service:
-    # TODO: Check if this needs the .service suffix
     name: "{{ service['name'] }}"
     enabled: yes
 
 - name: Start kestrel service
   become: yes
   service:
-    # TODO: Check if this needs the .service suffix
     name: "{{ service['name'] }}"
     state: started

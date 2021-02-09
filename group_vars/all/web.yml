@@ -2,7 +2,7 @@
 # Variables here are for the web role
 
 # Dotnet core runtime
-dotnet_core_url: https://download.visualstudio.microsoft.com/download/pr/69ee3993-54fe-4687-9388-25b1e0c888fb/df2ba0637e68f6e8ee212a38756a4002/aspnetcore-runtime-2.2.0-linux-x64.tar.gz
+dotnet_core_url: https://download.visualstudio.microsoft.com/download/pr/e716faa4-345c-45a7-bd1f-860cdf422b75/fa8e57167f3bd4bf20b8b60992cf184f/aspnetcore-runtime-2.2.8-linux-x64.tar.gz
 
 # Name of folder in /var/www/
 www_name: data_green

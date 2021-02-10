@@ -1,0 +1,6 @@
+# Remote database address
+db_address: 192.168.77.30
+# Database user's credentials
+db_user:
+  username: abcuser_1234
+  password: abc_password

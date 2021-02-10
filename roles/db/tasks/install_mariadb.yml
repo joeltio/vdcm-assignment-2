@@ -24,48 +24,14 @@
     src: my.cnf
     dest: /etc/mysql/my.cnf
 
-- name: Copy database creation SQL file
-  copy:
-    src: create_db.sql
-    dest: /tmp
+- name: Restart mariadb
+  become: yes
+  service:
+    name: mariadb
+    state: restarted
 
 - name: Create root mariadb account
   become: yes
-  command: mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'root'"
+  command: mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ db_root_password }}'"
   register: command_result
   failed_when: "'using password: NO' not in command_result.stderr and command_result.stderr"
-
-- name: Install or update pip
-  become: yes
-  apt:
-    name:
-    - python3-venv
-    - python3-pip
-    state: present
-
-- name: Make sure pymysql is present
-  become: true # needed if the other tasks are not played as root
-  pip:
-    name: pymysql
-    state: present
-
-- name: Load the database from an SQL file
-  community.mysql.mysql_db:
-    # Login with default username and password
-    login_user: root
-    login_password: root
-    state: import
-    name: all
-    encoding: utf8
-    target: /tmp/create_db.sql
-
-- name: Create mariadb user
-  community.mysql.mysql_user:
-    state: present
-    login_user: root
-    login_password: root
-    name: "{{ db_user['username'] | mandatory }}"
-    password: "{{ db_user['password'] | mandatory }}"
-    host: '%'
-    priv:
-      "DataGreenDB.*": 'ALL,GRANT'

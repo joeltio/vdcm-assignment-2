@@ -7,6 +7,12 @@
     src: app_publish
     dest: /var/www/{{ www_name }}
 
+- name: Configure and copy app_settings.json file
+  become: yes
+  template:
+    src: appsettings.json.j2
+    dest: /var/www/{{ www_name }}/app_publish/appsettings.json
+
 - name: Create kestrel service
   become: yes
   vars:
@@ -21,8 +27,8 @@
     name: "{{ service['name'] }}"
     enabled: yes
 
-- name: Start kestrel service
+- name: Restart kestrel service
   become: yes
   service:
     name: "{{ service['name'] }}"
-    state: started
+    state: restarted

@@ -2,4 +2,3 @@
 - include_tasks: install_dotnet_core.yml
 - include_tasks: install_app.yml
 - include_tasks: install_nginx.yml
-

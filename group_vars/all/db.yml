@@ -1,5 +1,5 @@
 # Remote database address
-db_address: 192.168.77.30
+db_address: "{{ hostvars[groups['dbserver'][0]].ansible_eth1.ipv4.address }}"
 # Database user's credentials
 db_user:
   username: abcuser_1234
